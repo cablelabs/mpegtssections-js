@@ -1,0 +1,25 @@
+{
+    "author": {
+        "name": "Brendan Long",
+        "email": "self@brendanlong.com",
+        "url": "https://www.brendanlong.com"
+    },
+    "bugs": "https://github.com/cablelabs/mpegtssections-js/issues",
+    "devDependencies": {
+        "jshint": "2.5.x",
+        "nodeunit": "0.8.x"
+    },
+    "homepage": "https://github.com/cablelabs/mpegtssections-js",
+    "license": "BSD-2-Clause",
+    "main": "./lib/mpegtssections",
+    "name": "mpegtssections",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cablelabs/mpegtssections-js.git"
+    },
+    "scripts": {
+        "hint": "./node_modules/.bin/jshint --show-non-errors lib/mpegtssections.js test/tests.js",
+        "test": "./node_modules/.bin/nodeunit test"
+    },
+    "version": "1.0.0"
+}
