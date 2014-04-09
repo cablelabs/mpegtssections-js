@@ -4,6 +4,8 @@ Author: Brendan Long <b.long@cablelabs.com>
 
 This library decodes [MPEG-TS program-specific information][mpegts-psi] into JSON. It's intended to be used with [HTML5 DataCues][datacue], but will work in any case where you have an `ArrayBuffer`.
 
+For additional information, you may want to consult the [ISO 13818-1 spec][iso-13818-1].
+
 ## Using this library
 
 To use, copy mpegtssections.js into your application's script directory, then add something like this to the `<head>` of your HTML page(s):
@@ -118,5 +120,6 @@ If `buf` is a PSI table (starting with the `table_id`), it will be decoded into 
  8. Return an `MpegTsTable`.
 
 [datacue]: http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#datacue
+[iso-13818-1]: http://www.iso.org/iso/home/store/catalogue_ics/catalogue_detail_ics.htm?csnumber=62074
 [mpegts-psi]: http://en.wikipedia.org/wiki/Program-specific_information
 [webidl]: http://www.w3.org/TR/WebIDL/
