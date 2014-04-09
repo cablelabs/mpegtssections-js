@@ -99,6 +99,26 @@ exports.TestPMT = function(test) {
         elementary_PID: 33,
         ES_info_length: 0
     });
+    test.deepEqual(section.streams[1], {
+        stream_type: 129,
+        elementary_PID: 36,
+        ES_info_length: 0
+    });
+    test.deepEqual(section.streams[2], {
+        stream_type: 134,
+        elementary_PID: 45,
+        ES_info_length: 0
+    });
+    test.deepEqual(section.streams[3], {
+        stream_type: 192,
+        elementary_PID: 1768,
+        ES_info_length: 9
+    });
+    test.deepEqual(section.streams[4], {
+        stream_type: 192,
+        elementary_PID: 1770,
+        ES_info_length: 8
+    });
 
     test.done();
 };
