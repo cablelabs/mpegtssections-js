@@ -56,29 +56,48 @@ exports.testBufArgumentTooSmall = function(test) {
     test.done();
 };
 
+exports.TestCAT = function(test) {
+    var data = new Uint8Array([0, 176, 13, 0, 1, 193, 0, 0, 0, 2, 224, 32, 160, 170, 220, 200]).buffer;
+    var section = MpegTs.decodeSection(data);
+
+    test.equal(section.table_id, 0, "table_id");
+    test.equal(section.private_indicator, 0, "private_indicator");
+    test.equal(section.section_length, 13, "section_length");
+
+    test.equal(section.syntax_section.table_id_extension, 1, "table_id_extension");
+    test.equal(section.syntax_section.version_number, 0, "version_number");
+    test.equal(section.syntax_section.current_next_indicator, 1, "current_next_indicator");
+    test.equal(section.syntax_section.section_number, 0, "section_number");
+    test.equal(section.syntax_section.last_section_number, 0, "last_section_number");
+    test.equal(section.syntax_section.CRC_32, 2695552200, "CRC_32");
+
+    // TODO: test section.descriptors
+    test.done();
+};
+
 exports.TestPMT = function(test) {
-    var data = new Uint8Array([2, 176, 18, 0, 1, 193, 0, 0, 225, 0, 240, 0, 2, 225, 0, 240, 0, 158, 139, 35, 209]).buffer;
+    var data = new Uint8Array([2, 176, 61, 0, 2, 193, 0, 0, 224, 33, 240, 6, 5, 4, 67, 85, 69, 73, 2, 224, 33, 240, 0, 129, 224, 36, 240, 0, 134, 224, 45, 240, 0, 192, 230, 232, 240, 9, 5, 4, 69, 84, 86, 49, 162, 1, 0, 192, 230, 234, 240, 8, 5, 4, 69, 84, 86, 49, 161, 0, 112, 252, 191, 31]).buffer;
     var section = MpegTs.decodeSection(data);
 
     test.equal(section.table_id, 2, "table_id should be 0x02");
-    test.equal(section.private_bit, 0, "private bit should be 0");
-    test.equal(section.section_length, 18, "section_length should be 18");
+    test.equal(section.private_indicator, 0, "private_indicator");
+    test.equal(section.section_length, 61, "section_length");
 
-    test.equal(section.syntax_section.table_id_extension, 1, "table_id_extension should be 1");
-    test.equal(section.syntax_section.version_number, 0, "version_number should be 0");
-    test.equal(section.syntax_section.current_next_indicator, 1, "current_next_indicator should be 1");
-    test.equal(section.syntax_section.section_number, 0);
-    test.equal(section.syntax_section.last_section_number, 0);
-    test.equal(section.syntax_section.CRC_32, 2659918801);
+    test.equal(section.syntax_section.table_id_extension, 2, "table_id_extension");
+    test.equal(section.syntax_section.version_number, 0, "version_number");
+    test.equal(section.syntax_section.current_next_indicator, 1, "current_next_indicator");
+    test.equal(section.syntax_section.section_number, 0, "section_number");
+    test.equal(section.syntax_section.last_section_number, 0, "last_section_number");
+    test.equal(section.syntax_section.CRC_32, 1895612191, "CRC_32");
 
-    test.equal(section.program_number, 1);
-    test.equal(section.PCR_PID, 256);
-    test.equal(section.program_info_length, 0);
+    test.equal(section.program_number, 2);
+    test.equal(section.PCR_PID, 33);
+    test.equal(section.program_info_length, 6);
     // TODO: test section.descriptors
-    test.equal(section.streams.length, 1);
+    test.equal(section.streams.length, 5);
     test.deepEqual(section.streams[0], {
         stream_type: 2,
-        elementary_PID: 256,
+        elementary_PID: 33,
         ES_info_length: 0
     });
 
@@ -86,9 +105,18 @@ exports.TestPMT = function(test) {
 }
 
 exports.TestUserPrivateData = function(test) {
-    var data = new Uint8Array([227, 64, 136, 251, 251, 0, 59, 176, 126, 0, 1, 193, 0, 0, 17, 3, 16, 2, 128, 0, 0, 1, 255, 0, 0, 105, 0, 0, 0, 1, 3, 216, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 12, 1, 60, 59, 67, 97, 98, 108, 101, 108, 97, 98, 115, 95, 78, 97, 116, 105, 111, 110, 97, 108, 95, 101, 116, 118, 95, 115, 116, 114, 101, 97, 109, 95, 99, 111, 110, 102, 105, 103, 47, 109, 97, 105, 110, 97, 112, 112, 47, 49, 46, 48, 47, 109, 97, 105, 110, 95, 112, 114, 46, 112, 114, 0, 15, 14, 105, 98, 46, 116, 118, 119, 111, 114, 107, 115, 46, 99, 111, 109, 225, 54, 136, 221, 188, 252, 142, 137]).buffer;
+    var data = new Uint8Array([224, 0, 114, 0, 0, 0, 3, 0, 0, 8, 0, 255, 255, 255, 0, 1, 0, 224, 94, 1, 1, 0, 0, 0, 0, 0, 0, 0, 100, 16, 82, 0, 80, 108, 105, 100, 58, 47, 47, 105, 98, 46, 116, 118, 119, 111, 114, 107, 115, 46, 99, 111, 109, 47, 67, 97, 98, 108, 101, 108, 97, 98, 115, 95, 78, 97, 116, 105, 111, 110, 97, 108, 95, 101, 116, 118, 95, 115, 116, 114, 101, 97, 109, 95, 99, 111, 110, 102, 105, 103, 47, 109, 97, 105, 110, 97, 112, 112, 47, 49, 46, 48, 47, 109, 97, 105, 110, 95, 112, 114, 46, 112, 114, 90, 3, 153, 38]).buffer;
     var section = MpegTs.decodeSection(data);
-    test.equal(section.table_id, 227);
-    //test.equal(section.private_indicator, 1, "private_indicator should be 1");
+    test.equal(section.table_id, 224, "table_id");
+    test.equal(section.private_indicator, 0, "private_indicator");
+
+    test.equal(section.syntax_section, null, "syntax_section");
+
+    var actual = [];
+    var dataAsArray = new Uint8Array(section.private_data);
+    for (var i = 0; i < dataAsArray.length; ++i) {
+        actual[i] = dataAsArray[i];
+    }
+    test.deepEqual(actual, [0, 0, 0, 3, 0, 0, 8, 0, 255, 255, 255, 0, 1, 0, 224, 94, 1, 1, 0, 0, 0, 0, 0, 0, 0, 100, 16, 82, 0, 80, 108, 105, 100, 58, 47, 47, 105, 98, 46, 116, 118, 119, 111, 114, 107, 115, 46, 99, 111, 109, 47, 67, 97, 98, 108, 101, 108, 97, 98, 115, 95, 78, 97, 116, 105, 111, 110, 97, 108, 95, 101, 116, 118, 95, 115, 116, 114, 101, 97, 109, 95, 99, 111, 110, 102, 105, 103, 47, 109, 97, 105, 110, 97, 112, 112, 47, 49, 46, 48, 47, 109, 97, 105, 110, 95, 112, 114, 46, 112, 114, 90, 3, 153, 38]);
     test.done();
 };

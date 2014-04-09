@@ -92,7 +92,6 @@ See Table 2-28 - Transport Stream program map section.
 See Table 2-30 - Private Section
 
     interface MpegTsPrivateSection implements MpegTsSection {
-        attribute unsigned short private_section_length;
         attribute MpegTsSyntaxSection? syntax_section;
         ArrayBuffer private_data;
     }
