@@ -28,7 +28,6 @@ The following uses [Web IDL][webidl] syntax to describe the resulting data struc
         attribute boolean current_next_indicator;
         attribute octet section_number;
         attribute octet last_section_number;
-        attribute unsigned long CRC_32;
     }
 
     interface MpegTsSection {
