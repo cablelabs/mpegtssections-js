@@ -92,6 +92,7 @@ See Table 2-30 - Private Section
 
     interface MpegTsPrivateSection implements MpegTsSection {
         attribute MpegTsSyntaxSection? syntax_section;
+        // private_section_length is stored as section_length
         ArrayBuffer private_data;
     }
 
@@ -109,14 +110,15 @@ See Table 2-30-1 - The Transport Stream Description Table
 
 If `buf` is a PSI table (starting with the `table_id`), it will be decoded into the most appropriate type, using the following algorithm:
 
- 1. If there are any serious problems with the data (lengths are wrong), throw an exception.
- 2. If the `table_id` is 0, return an `MpegTsPat`.
- 3. If the `table_id` is 1, return an `MpegTsCat`.
- 4. If the `table_id` is 2, return an `MpegTsPmt`.
- 5. If the `table_id` is 3, return an `MpegTsDescriptionSection`.
- 6. If the `table_id` is >= 128, return an `MpegTsPrivateSection`.
- 7. If the `sectionSyntaxIndicator` is `true`, return an `MpegTsTableWithSyntaxSection`.
- 8. Return an `MpegTsTable`.
+ 1. If there are any serious problems with the data (lengths are wrong), throw a `BadSizeError`.
+ 2. If `table_id` is 0, 1, 2, or 3 (PAT, CAT, PMT, Description), throw a `MissingSyntaxSectionError` if `syntax_section_indicator` is not 1.
+ 3. If `syntax_section_indicator` is 1, throw an `InvalidCrcError` if the CRC-32 of the buffer is not 0.
+ 4. If the `table_id` is 0, return an `MpegTsPat`.
+ 5. If the `table_id` is 1, return an `MpegTsCat`.
+ 6. If the `table_id` is 2, return an `MpegTsPmt`.
+ 7. If the `table_id` is 3, return an `MpegTsDescriptionSection`.
+ 8. If the `table_id` is >= 128, return an `MpegTsPrivateSection`.
+ 9. Return an `MpegTsSection`.
 
 [datacue]: http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#datacue
 [iso-13818-1]: http://www.iso.org/iso/home/store/catalogue_ics/catalogue_detail_ics.htm?csnumber=62074
