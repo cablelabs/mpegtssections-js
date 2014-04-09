@@ -27,6 +27,15 @@
 "use strict";
 var MpegTs = require('../lib/mpegtssections');
 
+function arrayBufferToArray(buf) {
+    var result = [];
+    var asArray = new Uint8Array(buf);
+    for (var i = 0; i < asArray.length; ++i) {
+        result[i] = asArray[i];
+    }
+    return result;
+}
+
 exports.TestBufArgumentNull = function(test) {
     test.throws(function() {
         MpegTs.decodeSection(null);
@@ -92,33 +101,45 @@ exports.TestPMT = function(test) {
     test.equal(section.program_number, 2);
     test.equal(section.PCR_PID, 33);
     test.equal(section.program_info_length, 6);
-    // TODO: test section.descriptors
-    test.equal(section.streams.length, 5);
-    test.deepEqual(section.streams[0], {
+
+    test.deepEqual(section.descriptors, [{
+        tag: 5,
+        data: new Uint8Array([67, 85, 69, 73]).buffer
+    }]);
+
+    test.deepEqual(section.streams, [{
         stream_type: 2,
         elementary_PID: 33,
-        ES_info_length: 0
-    });
-    test.deepEqual(section.streams[1], {
+        descriptors: []
+    }, {
         stream_type: 129,
         elementary_PID: 36,
-        ES_info_length: 0
-    });
-    test.deepEqual(section.streams[2], {
+        descriptors: []
+    }, {
         stream_type: 134,
         elementary_PID: 45,
-        ES_info_length: 0
-    });
-    test.deepEqual(section.streams[3], {
+        descriptors: []
+    }, {
         stream_type: 192,
         elementary_PID: 1768,
-        ES_info_length: 9
-    });
-    test.deepEqual(section.streams[4], {
+        descriptors: [{
+            tag: 5,
+            data: new Uint8Array([69, 84, 86, 49]).buffer
+        }, {
+            tag: 162,
+            data: new Uint8Array([0]).buffer
+        }]
+    }, {
         stream_type: 192,
         elementary_PID: 1770,
-        ES_info_length: 8
-    });
+        descriptors: [{
+            tag: 5,
+            data: new Uint8Array([69, 84, 86, 49]).buffer
+        }, {
+            tag: 161,
+            data: new Uint8Array([]).buffer
+        }]
+    }]);
 
     test.done();
 };
@@ -131,11 +152,6 @@ exports.TestUserPrivateData = function(test) {
 
     test.equal(section.syntax_section, null, "syntax_section");
 
-    var actual = [];
-    var dataAsArray = new Uint8Array(section.private_data);
-    for (var i = 0; i < dataAsArray.length; ++i) {
-        actual[i] = dataAsArray[i];
-    }
-    test.deepEqual(actual, [0, 0, 0, 3, 0, 0, 8, 0, 255, 255, 255, 0, 1, 0, 224, 94, 1, 1, 0, 0, 0, 0, 0, 0, 0, 100, 16, 82, 0, 80, 108, 105, 100, 58, 47, 47, 105, 98, 46, 116, 118, 119, 111, 114, 107, 115, 46, 99, 111, 109, 47, 67, 97, 98, 108, 101, 108, 97, 98, 115, 95, 78, 97, 116, 105, 111, 110, 97, 108, 95, 101, 116, 118, 95, 115, 116, 114, 101, 97, 109, 95, 99, 111, 110, 102, 105, 103, 47, 109, 97, 105, 110, 97, 112, 112, 47, 49, 46, 48, 47, 109, 97, 105, 110, 95, 112, 114, 46, 112, 114, 90, 3, 153, 38]);
+    test.deepEqual(arrayBufferToArray(section.private_data), [0, 0, 0, 3, 0, 0, 8, 0, 255, 255, 255, 0, 1, 0, 224, 94, 1, 1, 0, 0, 0, 0, 0, 0, 0, 100, 16, 82, 0, 80, 108, 105, 100, 58, 47, 47, 105, 98, 46, 116, 118, 119, 111, 114, 107, 115, 46, 99, 111, 109, 47, 67, 97, 98, 108, 101, 108, 97, 98, 115, 95, 78, 97, 116, 105, 111, 110, 97, 108, 95, 101, 116, 118, 95, 115, 116, 114, 101, 97, 109, 95, 99, 111, 110, 102, 105, 103, 47, 109, 97, 105, 110, 97, 112, 112, 47, 49, 46, 48, 47, 109, 97, 105, 110, 95, 112, 114, 46, 112, 114, 90, 3, 153, 38]);
     test.done();
 };

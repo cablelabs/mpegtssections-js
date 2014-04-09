@@ -39,7 +39,6 @@ The following uses [Web IDL][webidl] syntax to describe the resulting data struc
 
     interface MpegTsDescriptor {
         attribute octet tag;
-        attribute octet length; // in bytes
         attribute ArrayBuffer data;
     }
 
@@ -74,7 +73,6 @@ See Table 2-28 - Transport Stream program map section.
     interface MpegTsElementaryStream {
         attribute octet stream_type;
         attribute unsigned short elementary_PID;
-        attribute unsigned short ES_info_length;
         attribute MpegTsDescriptor[] descriptors;
     }
 
