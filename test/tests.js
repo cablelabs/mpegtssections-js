@@ -56,7 +56,7 @@ exports.testBufArgumentTooSmall = function(test) {
     test.done();
 };
 
-exports.TestCAT = function(test) {
+exports.TestPAT = function(test) {
     var data = new Uint8Array([0, 176, 13, 0, 1, 193, 0, 0, 0, 2, 224, 32, 160, 170, 220, 200]).buffer;
     var section = MpegTs.decodeSection(data);
 
@@ -70,7 +70,8 @@ exports.TestCAT = function(test) {
     test.equal(section.syntax_section.section_number, 0, "section_number");
     test.equal(section.syntax_section.last_section_number, 0, "last_section_number");
 
-    // TODO: test section.descriptors
+    test.equal(section.transport_stream_id, 1);
+    // TODO: test program_info
     test.done();
 };
 
