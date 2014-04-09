@@ -32,7 +32,7 @@ The following uses [Web IDL][webidl] syntax to describe the resulting data struc
 
     interface MpegTsSection {
         attribute octet table_id;
-        attribute boolean private_bit;
+        attribute boolean private_indicator;
         attribute unsigned short section_length;
         attribute MpegTsSyntaxSection? syntax_section;
     }
