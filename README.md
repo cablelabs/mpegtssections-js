@@ -28,11 +28,12 @@ The following uses [Web IDL][webidl] syntax to describe the resulting data struc
         attribute boolean current_next_indicator;
         attribute octet section_number;
         attribute octet last_section_number;
-        attribute unsigned long crc32;
+        attribute unsigned long CRC_32;
     }
 
     interface MpegTsSection {
         attribute octet table_id;
+        attribute boolean private_bit;
         attribute unsigned short section_length;
         attribute MpegTsSyntaxSection? syntax_section;
     }
@@ -79,10 +80,11 @@ See Table 2-28 - Transport Stream program map section.
     }
 
     interface MpegTsPmt implements MpegTsSection {
+        attribute unsigned short program_number;
         attribute unsigned short? PCR_PID; // 8191 maps to null
         attribute octet program_info_length;
         attribute MpegTsDescriptor[] descriptors;
-        attribute MpegTsElementaryStreamData[] stream_info;
+        attribute MpegTsElementaryStreamData[] streams;
     }
 
 #### Private Section
@@ -90,7 +92,6 @@ See Table 2-28 - Transport Stream program map section.
 See Table 2-30 - Private Section
 
     interface MpegTsPrivateSection implements MpegTsSection {
-        attribute boolean private_indicator;
         attribute unsigned short private_section_length;
         attribute MpegTsSyntaxSection? syntax_section;
         ArrayBuffer private_data;
@@ -106,7 +107,7 @@ See Table 2-30-1 - The Transport Stream Description Table
 
 #### Functions
 
-`String MpegTs.decodeTable(ArrayBuffer buf, boolean checkReservedBits)`
+`String MpegTs.decodeTable(ArrayBuffer buf)`
 
 If `buf` is a PSI table (starting with the `table_id`), it will be decoded into the most appropriate type, using the following algorithm:
 
