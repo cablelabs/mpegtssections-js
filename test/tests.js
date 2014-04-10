@@ -65,13 +65,28 @@ exports.testBufArgumentTooSmall = function(test) {
     test.done();
 };
 
+exports.testBufLessThanSectionLength = function(test) {
+    test.throws(function() {
+        var data = new Uint8Array([0, 176, 13, 0, 1, 193, 0, 0, 0, 2, 224, 32, 160, 170, 220]).buffer;
+        MpegTs.decodeSection(data);
+    }, MpegTs.BadSizeError);
+    test.done();
+};
+
+exports.testBufGreaterThanSectionLength = function(test) {
+    test.throws(function() {
+        var data = new Uint8Array([0, 176, 13, 0, 1, 193, 0, 0, 0, 2, 224, 32, 160, 170, 220, 0, 0]).buffer;
+        MpegTs.decodeSection(data);
+    }, MpegTs.BadSizeError);
+    test.done();
+};
+
 exports.TestPAT = function(test) {
     var data = new Uint8Array([0, 176, 13, 0, 1, 193, 0, 0, 0, 2, 224, 32, 160, 170, 220, 200]).buffer;
     var section = MpegTs.decodeSection(data);
 
     test.equal(section.table_id, 0, "table_id");
     test.equal(section.private_indicator, 0, "private_indicator");
-    test.equal(section.section_length, 13, "section_length");
 
     test.equal(section.syntax_section.table_id_extension, 1, "table_id_extension");
     test.equal(section.syntax_section.version_number, 0, "version_number");
@@ -90,7 +105,6 @@ exports.TestPMT = function(test) {
 
     test.equal(section.table_id, 2, "table_id should be 0x02");
     test.equal(section.private_indicator, 0, "private_indicator");
-    test.equal(section.section_length, 61, "section_length");
 
     test.equal(section.syntax_section.table_id_extension, 2, "table_id_extension");
     test.equal(section.syntax_section.version_number, 0, "version_number");
