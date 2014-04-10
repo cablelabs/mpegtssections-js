@@ -50,14 +50,14 @@ exports.TestBufArgumentUndefined = function(test) {
     test.done();
 };
 
-exports.testBufArgumentWrongType = function(test) {
+exports.TestBufArgumentWrongType = function(test) {
     test.throws(function() {
         MpegTs.decodeSection([5]);
     }, TypeError);
     test.done();
 };
 
-exports.testBufArgumentTooSmall = function(test) {
+exports.TestBufArgumentTooSmall = function(test) {
     test.throws(function() {
         var data = new Uint8Array([1, 2]).buffer;
         MpegTs.decodeSection(data);
@@ -65,7 +65,7 @@ exports.testBufArgumentTooSmall = function(test) {
     test.done();
 };
 
-exports.testBufLessThanSectionLength = function(test) {
+exports.TestBufLessThanSectionLength = function(test) {
     test.throws(function() {
         var data = new Uint8Array([0, 176, 13, 0, 1, 193, 0, 0, 0, 2, 224, 32, 160, 170, 220]).buffer;
         MpegTs.decodeSection(data);
@@ -73,11 +73,19 @@ exports.testBufLessThanSectionLength = function(test) {
     test.done();
 };
 
-exports.testBufGreaterThanSectionLength = function(test) {
+exports.TestBufGreaterThanSectionLength = function(test) {
     test.throws(function() {
         var data = new Uint8Array([0, 176, 13, 0, 1, 193, 0, 0, 0, 2, 224, 32, 160, 170, 220, 0, 0]).buffer;
         MpegTs.decodeSection(data);
     }, MpegTs.BadSizeError);
+    test.done();
+};
+
+exports.TestBadCrc = function(test) {
+    test.throws(function() {
+        var data = new Uint8Array([0, 176, 13, 0, 5, 193, 0, 0, 0, 2, 224, 32, 160, 170, 220, 200]).buffer;
+        MpegTs.decodeSection(data);
+    }, MpegTs.InvalidCrcError);
     test.done();
 };
 
