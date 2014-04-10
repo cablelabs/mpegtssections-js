@@ -38,16 +38,16 @@ The following uses [Web IDL][webidl] syntax to describe the resulting data struc
 #### Generic MPEG-TS Section
 
     interface MpegTsSyntaxSection {
-        attribute unsigned short table_id_extension;
-        attribute octet version_number;
-        attribute boolean current_next_indicator;
-        attribute octet section_number;
-        attribute octet last_section_number;
+        attribute unsigned short tableIdExtension;
+        attribute octet versionNumber;
+        attribute boolean currentNextIndicator;
+        attribute octet sectionNumber;
+        attribute octet lastSectionNumber;
     }
 
     interface MpegTsSection {
-        attribute octet table_id;
-        attribute MpegTsSyntaxSection? syntax_section;
+        attribute octet tableId;
+        attribute MpegTsSyntaxSection? syntaxSection;
     }
 
     interface MpegTsDescriptor {
@@ -60,16 +60,16 @@ The following uses [Web IDL][webidl] syntax to describe the resulting data struc
 See Table 2-25 - Program association section
 
     interface MpegTsPatProgramInfo {
-        attribute unsigned short program_number;
+        attribute unsigned short programNumber;
 
-        // this is the network_PID if program_number == 0,
-        // or the program_map_PID if program_number != 0
-        attribute unsigned short PID;
+        // this is the network_PID if programNumber == 0,
+        // or the program_map_PID if programNumber != 0
+        attribute unsigned short pid;
     }
 
     interface MpegTsPat implements MpegTsSection {
-        attribute unsigned short transport_stream_id;
-        attribute MpegTsPatProgramInfo[] program_info;
+        attribute unsigned short transportStreamId;
+        attribute MpegTsPatProgramInfo[] programInfo;
     }
 
 #### Conditional Access Table
@@ -85,14 +85,14 @@ See Table 2-27 - Conditional access section.
 See Table 2-28 - Transport Stream program map section.
 
     interface MpegTsElementaryStream {
-        attribute octet stream_type;
-        attribute unsigned short elementary_PID;
+        attribute octet streamType;
+        attribute unsigned short elementaryPID;
         attribute MpegTsDescriptor[] descriptors;
     }
 
     interface MpegTsPmt implements MpegTsSection {
-        attribute unsigned short program_number;
-        attribute unsigned short? PCR_PID; // 8191 maps to null
+        attribute unsigned short programNumber;
+        attribute unsigned short? pcrPID; // 8191 maps to null
         attribute MpegTsDescriptor[] descriptors;
         attribute MpegTsElementaryStreamData[] streams;
     }
@@ -102,9 +102,9 @@ See Table 2-28 - Transport Stream program map section.
 See Table 2-30 - Private Section
 
     interface MpegTsPrivateSection implements MpegTsSection {
-        attribute boolean private_indicator;
-        attribute MpegTsSyntaxSection? syntax_section;
-        ArrayBuffer private_data;
+        attribute boolean privateIndicator;
+        attribute MpegTsSyntaxSection? syntaxSection;
+        ArrayBuffer privateData;
     }
 
 #### Transport Stream Description
