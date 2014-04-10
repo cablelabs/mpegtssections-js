@@ -33,7 +33,7 @@ See `test/tests.js` for the [Nodeunit][nodeunit] tests.
 
 ### Data Structures
 
-The following uses [Web IDL][webidl] syntax to describe the resulting data structures. The attribute names are taken directly from the MPEG-TS spec.
+The following uses [Web IDL][webidl] syntax to describe the resulting data structures. The attribute names are taken directly from the MPEG-TS spec (except changed to CamelCase to match JavaScript conventions). Data which isn't only needed for parsing or validation is validated, but not exposed.
 
 #### Generic MPEG-TS Section
 
