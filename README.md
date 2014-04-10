@@ -48,8 +48,9 @@ See Table 2-25 - Program association section
     interface MpegTsPatProgramInfo {
         attribute unsigned short program_number;
 
-        attribute unsigned short? network_PID; // if program_number == 0
-        attribute unsigned short? program_map_PID; // if program_number != 0
+        // this is the network_PID if program_number == 0,
+        // or the program_map_PID if program_number != 0
+        attribute unsigned short PID;
     }
 
     interface MpegTsPat implements MpegTsSection {

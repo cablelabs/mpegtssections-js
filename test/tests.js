@@ -95,7 +95,11 @@ exports.TestPAT = function(test) {
     test.equal(section.syntax_section.last_section_number, 0, "last_section_number");
 
     test.equal(section.transport_stream_id, 1);
-    // TODO: test program_info
+    test.deepEqual(section.program_info, [{
+        program_number: 2,
+        PID: 2
+    }]);
+
     test.done();
 };
 
