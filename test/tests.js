@@ -108,7 +108,6 @@ exports.TestPAT = function(test) {
     var section = MpegTs.decodeSection(data);
 
     test.equal(section.table_id, 0, "table_id");
-    test.equal(section.private_indicator, 0, "private_indicator");
 
     test.equal(section.syntax_section.table_id_extension, 1, "table_id_extension");
     test.equal(section.syntax_section.version_number, 0, "version_number");
@@ -130,7 +129,6 @@ exports.TestPMT = function(test) {
     var section = MpegTs.decodeSection(data);
 
     test.equal(section.table_id, 2, "table_id should be 0x02");
-    test.equal(section.private_indicator, 0, "private_indicator");
 
     test.equal(section.syntax_section.table_id_extension, 2, "table_id_extension");
     test.equal(section.syntax_section.version_number, 0, "version_number");

@@ -32,7 +32,6 @@ The following uses [Web IDL][webidl] syntax to describe the resulting data struc
 
     interface MpegTsSection {
         attribute octet table_id;
-        attribute boolean private_indicator;
         attribute MpegTsSyntaxSection? syntax_section;
     }
 
@@ -88,6 +87,7 @@ See Table 2-28 - Transport Stream program map section.
 See Table 2-30 - Private Section
 
     interface MpegTsPrivateSection implements MpegTsSection {
+        attribute boolean private_indicator;
         attribute MpegTsSyntaxSection? syntax_section;
         ArrayBuffer private_data;
     }
