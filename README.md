@@ -117,7 +117,7 @@ See Table 2-30-1 - The Transport Stream Description Table
 
 #### Functions
 
-`String MpegTs.decodeTable(ArrayBuffer buf)`
+`String MpegTs.decodeSection(ArrayBuffer buf)`
 
 If `buf` is a PSI table (starting with the `table_id`), it will be decoded into the most appropriate type, using the following algorithm:
 
@@ -131,9 +131,9 @@ If `buf` is a PSI table (starting with the `table_id`), it will be decoded into 
  8. If the `table_id` is >= 128, return an `MpegTsPrivateSection`.
  9. Return an `MpegTsSection`.
 
-`unsigned short MpegTs.calculateCRC32(ArrayBuffer buf)`
+`unsigned short MpegTs.calculateCrc32(ArrayBuffer buf)`
 
-Calculates the CRC32/MPEG-2 of the given data. If you want to calculate the CRC of just part of the buffer, use `ArrayBuffer.slice()`. For a valid MPEG-TS section with a syntax section, the CRC-32 of all of the data from the `table_id` to the `CRC_32` should be 0.
+Calculates the CRC32/MPEG-2 of the given data. If you want to calculate the CRC of just part of the buffer, use `ArrayBuffer.slice()`. For a valid MPEG-TS section with a syntax section, the CRC-32 of all of the data from the `table_id` to the `CRC_32` should be 0. This check will be run automatically by `decodeSection()`.
 
 [datacue]: http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#datacue
 [iso-13818-1]: http://www.iso.org/iso/home/store/catalogue_ics/catalogue_detail_ics.htm?csnumber=62074

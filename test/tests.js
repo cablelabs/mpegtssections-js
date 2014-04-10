@@ -112,7 +112,7 @@ exports.TestBadCrc = function(test) {
     test.done();
 };
 
-exports.TestPAT = function(test) {
+exports.TestPat = function(test) {
     var data = new Uint8Array([0, 176, 13, 0, 1, 193, 0, 0, 0, 2, 224, 32, 160, 170, 220, 200]).buffer;
     var section = MpegTs.decodeSection(data);
 
@@ -133,7 +133,7 @@ exports.TestPAT = function(test) {
     test.done();
 };
 
-exports.TestPMT = function(test) {
+exports.TestPmt = function(test) {
     var data = new Uint8Array([2, 176, 61, 0, 2, 193, 0, 0, 224, 33, 240, 6, 5, 4, 67, 85, 69, 73, 2, 224, 33, 240, 0, 129, 224, 36, 240, 0, 134, 224, 45, 240, 0, 192, 230, 232, 240, 9, 5, 4, 69, 84, 86, 49, 162, 1, 0, 192, 230, 234, 240, 8, 5, 4, 69, 84, 86, 49, 161, 0, 112, 252, 191, 31]).buffer;
     var section = MpegTs.decodeSection(data);
 
@@ -146,7 +146,7 @@ exports.TestPMT = function(test) {
     test.equal(section.syntaxSection.lastSectionNumber, 0, "lastSectionNumber");
 
     test.equal(section.programNumber, 2, "programNumber");
-    test.equal(section.pcrPID, 33, "pcrPID");
+    test.equal(section.pcrPid, 33, "pcrPid");
 
     test.deepEqual(section.descriptors, [{
         tag: 5,
@@ -155,19 +155,19 @@ exports.TestPMT = function(test) {
 
     test.deepEqual(section.streams, [{
         streamType: 2,
-        elementaryPID: 33,
+        elementaryPid: 33,
         descriptors: []
     }, {
         streamType: 129,
-        elementaryPID: 36,
+        elementaryPid: 36,
         descriptors: []
     }, {
         streamType: 134,
-        elementaryPID: 45,
+        elementaryPid: 45,
         descriptors: []
     }, {
         streamType: 192,
-        elementaryPID: 1768,
+        elementaryPid: 1768,
         descriptors: [{
             tag: 5,
             data: new Uint8Array([69, 84, 86, 49]).buffer
@@ -177,7 +177,7 @@ exports.TestPMT = function(test) {
         }]
     }, {
         streamType: 192,
-        elementaryPID: 1770,
+        elementaryPid: 1770,
         descriptors: [{
             tag: 5,
             data: new Uint8Array([69, 84, 86, 49]).buffer
@@ -190,10 +190,10 @@ exports.TestPMT = function(test) {
     test.done();
 };
 
-exports.TestPMTWIthNullPCRPid = function(test) {
+exports.TestPmtWithNullPcrPid = function(test) {
     var data = new Uint8Array(arrayToBufferWithValidCrc32([2, 176, 61, 0, 2, 193, 0, 0, 255, 255, 240, 6, 5, 4, 67, 85, 69, 73, 2, 224, 33, 240, 0, 129, 224, 36, 240, 0, 134, 224, 45, 240, 0, 192, 230, 232, 240, 9, 5, 4, 69, 84, 86, 49, 162, 1, 0, 192, 230, 234, 240, 8, 5, 4, 69, 84, 86, 49, 161, 0])).buffer;
     var section = MpegTs.decodeSection(data);
-    test.strictEqual(section.pcrPID, null, "pcrPID");
+    test.strictEqual(section.pcrPid, null, "pcrPid");
     test.done();
 };
 
