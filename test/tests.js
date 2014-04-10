@@ -23,7 +23,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-/*jslint browser: true, node: true, plusplus: true, vars: true, indent: 4 */
+/*jslint browser: true, node: true, bitwise: true, plusplus: true, vars: true,
+  indent: 4, strict: true, shadow: true */
 "use strict";
 var MpegTs = require('../lib/mpegtssections');
 
