@@ -140,7 +140,6 @@ exports.TestPMT = function(test) {
 
     test.equal(section.program_number, 2);
     test.equal(section.PCR_PID, 33);
-    test.equal(section.program_info_length, 6);
 
     test.deepEqual(section.descriptors, [{
         tag: 5,

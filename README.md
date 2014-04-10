@@ -79,7 +79,6 @@ See Table 2-28 - Transport Stream program map section.
     interface MpegTsPmt implements MpegTsSection {
         attribute unsigned short program_number;
         attribute unsigned short? PCR_PID; // 8191 maps to null
-        attribute octet program_info_length;
         attribute MpegTsDescriptor[] descriptors;
         attribute MpegTsElementaryStreamData[] streams;
     }
@@ -90,7 +89,6 @@ See Table 2-30 - Private Section
 
     interface MpegTsPrivateSection implements MpegTsSection {
         attribute MpegTsSyntaxSection? syntax_section;
-        // private_section_length is stored as section_length
         ArrayBuffer private_data;
     }
 
