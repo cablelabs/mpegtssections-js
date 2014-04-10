@@ -24,9 +24,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 /*jslint browser: true, node: true, bitwise: true, plusplus: true, vars: true,
-  indent: 4, strict: true, shadow: true, camelcase: true, curly: true */
+  indent: 4, strict: true, shadow: true, camelcase: true, curly: true,
+  quotmark: double, latedef: true, undef: true, unused: true, trailing: true */
 "use strict";
-var MpegTs = require('../lib/mpegtssections');
+var MpegTs = require("../lib/mpegtssections");
 
 function arrayBufferToArray(buf) {
     var result = [];
