@@ -2,6 +2,8 @@
 
 Author: Brendan Long <b.long@cablelabs.com>
 
+CRC-32 code adapted from the output of [Thomas Pircher's (MIT licensed) pycrc][pycrc].
+
 This library decodes [MPEG-TS program-specific information][mpegts-psi] into JSON. It's intended to be used with [HTML5 DataCues][datacue], but will work in any case where you have an `ArrayBuffer`.
 
 For additional information, you may want to consult the [ISO 13818-1 spec][iso-13818-1].
@@ -13,6 +15,19 @@ To use, copy mpegtssections.js into your application's script directory, then ad
     <script src="your-script-directory/mpegtssections.js"></script>
 
 You can then use `MpegTs` methods in your JavaScript code.
+
+## Testing
+
+You can run the tests using Node.js:
+
+    cd ~/mpegtssection-js
+    npm install
+    npm test # runs unit tests
+    npm run-script hint # runs JSHint
+
+See `test/tests.js` for the [Nodeunit][nodeunit] tests.
+
+[JSHint][jshint] follows directives in the `/*jslint ... */` block at the top of each JavaScript file.
 
 ## API Documentation
 
@@ -118,5 +133,8 @@ If `buf` is a PSI table (starting with the `table_id`), it will be decoded into 
 
 [datacue]: http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#datacue
 [iso-13818-1]: http://www.iso.org/iso/home/store/catalogue_ics/catalogue_detail_ics.htm?csnumber=62074
+[jshint]: http://www.jshint.com/about/
 [mpegts-psi]: http://en.wikipedia.org/wiki/Program-specific_information
+[nodeunit]: https://github.com/caolan/nodeunit
+[pycrc]: https://github.com/tpircher/pycrc
 [webidl]: http://www.w3.org/TR/WebIDL/
