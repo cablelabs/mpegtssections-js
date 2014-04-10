@@ -37,6 +37,15 @@ function arrayBufferToArray(buf) {
     return result;
 }
 
+function arrayToBufferWithValidCrc32(array) {
+    array.push(0, 0, 0, 0);
+    var buffer = new Uint8Array(array).buffer;
+    var crc32 = MpegTs.calculateCrc32(buffer.slice(0, buffer.byteLength - 4));
+    var view = new DataView(buffer);
+    view.setUint32(buffer.byteLength - 4, crc32);
+    return buffer;
+}
+
 exports.TestBufArgumentNull = function(test) {
     test.throws(function() {
         MpegTs.decodeSection(null);
@@ -178,6 +187,13 @@ exports.TestPMT = function(test) {
         }]
     }], "streams");
 
+    test.done();
+};
+
+exports.TestPMTWIthNullPCRPid = function(test) {
+    var data = new Uint8Array(arrayToBufferWithValidCrc32([2, 176, 61, 0, 2, 193, 0, 0, 255, 255, 240, 6, 5, 4, 67, 85, 69, 73, 2, 224, 33, 240, 0, 129, 224, 36, 240, 0, 134, 224, 45, 240, 0, 192, 230, 232, 240, 9, 5, 4, 69, 84, 86, 49, 162, 1, 0, 192, 230, 234, 240, 8, 5, 4, 69, 84, 86, 49, 161, 0])).buffer;
+    var section = MpegTs.decodeSection(data);
+    test.strictEqual(section.pcrPID, null, "pcrPID");
     test.done();
 };
 
