@@ -81,6 +81,19 @@ exports.TestBufGreaterThanSectionLength = function(test) {
     test.done();
 };
 
+exports.TestBufferTooShortForSyntaxSection = function(test) {
+    test.throws(function() {
+        try {
+            var data = new Uint8Array([0, 176, 0]).buffer;
+            MpegTs.decodeSection(data);
+        } catch (e) {
+            test.equal(e.message, "section_syntax_indicator is 1, but the buffer is not long enough to contain a valid syntax section");
+            throw e;
+        }
+    }, MpegTs.BadSizeError);
+    test.done();
+};
+
 exports.TestBadCrc = function(test) {
     test.throws(function() {
         var data = new Uint8Array([0, 176, 13, 0, 5, 193, 0, 0, 0, 2, 224, 32, 160, 170, 220, 200]).buffer;
