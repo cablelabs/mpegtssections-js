@@ -1,8 +1,7 @@
 {
     "author": {
         "name": "Brendan Long",
-        "email": "self@brendanlong.com",
-        "url": "https://www.brendanlong.com"
+        "email": "b.long@cablelabs.com"
     },
     "bugs": "https://github.com/cablelabs/mpegtssections-js/issues",
     "devDependencies": {
