@@ -131,6 +131,10 @@ If `buf` is a PSI table (starting with the `table_id`), it will be decoded into 
  8. If the `table_id` is >= 128, return an `MpegTsPrivateSection`.
  9. Return an `MpegTsSection`.
 
+`unsigned short MpegTs.calculateCRC32(ArrayBuffer buf)`
+
+Calculates the CRC32/MPEG-2 of the given data. If you want to calculate the CRC of just part of the buffer, use `ArrayBuffer.slice()`. For a valid MPEG-TS section with a syntax section, the CRC-32 of all of the data from the `table_id` to the `CRC_32` should be 0.
+
 [datacue]: http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#datacue
 [iso-13818-1]: http://www.iso.org/iso/home/store/catalogue_ics/catalogue_detail_ics.htm?csnumber=62074
 [jshint]: http://www.jshint.com/about/
