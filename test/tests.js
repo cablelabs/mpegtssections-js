@@ -24,8 +24,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 /*jslint browser: true, node: true, bitwise: true, plusplus: true, vars: true,
-  indent: 4, strict: true, shadow: true, camelcase: true, curly: true,
+  white: true, indent: 4 */
+/*jshint strict: true, shadow: true, camelcase: true, curly: true,
   quotmark: double, latedef: true, undef: true, unused: true, trailing: true */
+/*global Uint8Array */
 "use strict";
 var MpegTs = require("../lib/mpegtssections");
 
