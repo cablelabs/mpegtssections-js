@@ -5,6 +5,7 @@
     },
     "bugs": "https://github.com/cablelabs/mpegtssections-js/issues",
     "devDependencies": {
+        "gluejs": "2.3.x",
         "jshint": "2.5.x",
         "nodeunit": "0.8.x"
     },
@@ -17,8 +18,7 @@
         "url": "https://github.com/cablelabs/mpegtssections-js.git"
     },
     "scripts": {
-        "hint": "./node_modules/.bin/jshint --show-non-errors lib test",
-        "test": "./node_modules/.bin/nodeunit test"
+        "test": "make test"
     },
     "version": "1.0.0"
 }
